@@ -25,40 +25,63 @@ function clicked(e) {
       resultDiv.innerText = expression;
       return;
     }
-  }
-  // else if (first === true) {
-  //   if (!(e === "+" || e === "-" || e === "x" || e === "/" || e === "±")) {
-  //     prev = Number(expression);
-  //   }
-  // }
-  else if (e === "+" || e === "-" || e === "x" || e === "/") {
+  } else if (first === true) {
+    expression = expression + e;
+    resultDiv.innerText = expression;
+    prev = Number(expression);
+    console.log("here");
+    console.log(prev);
+    first = false;
+  } else if (e === "+" || e === "-" || e === "x" || e === "/") {
     if (op === "") {
       op = e;
       expression = "";
     } else {
       if (op === "+") {
+        console.log(prev);
         expression = Number(prev) + Number(expression);
+        console.log(expression);
         resultDiv.innerText = expression;
         op = e;
+        prev = Number(expression);
+        console.log(prev);
         expression = "";
       } else if (op === "-") {
+        console.log(prev);
         expression = Number(prev) - Number(expression);
+        console.log(expression);
         resultDiv.innerText = expression;
         op = e;
+        prev = Number(expression);
+        console.log(prev);
         expression = "";
       } else if (op === "x") {
+        console.log(prev);
         expression = Number(prev) * Number(expression);
+        console.log(expression);
         resultDiv.innerText = expression;
         op = e;
+        prev = Number(expression);
+        console.log(prev);
         expression = "";
       } else if (op === "/") {
+        console.log(prev);
         expression = Number(prev) / Number(expression);
+        console.log(expression);
         resultDiv.innerText = expression;
         op = e;
+        prev = Number(expression);
+        console.log(prev);
         expression = "";
       }
     }
   } else if (e === "del") {
+    expression = resultDiv.innerText;
+    if (expression === "Infinity") {
+      expression = "";
+      resultDiv.innerText = expression;
+      return;
+    }
     expression = expression.slice(0, expression.length - 1);
     resultDiv.innerText = expression;
   } else {
