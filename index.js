@@ -143,7 +143,7 @@ document.addEventListener("keydown", function (event) {
     clicked("del");
   } else if (
     key === "a" ||
-    key == "c" ||
+    key === "c" ||
     key === "A" ||
     key === "C" ||
     key === "Escape"
