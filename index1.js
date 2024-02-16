@@ -9,6 +9,7 @@ function clicked(e) {
   if (e === "C") {
     expression = "";
     prev = 0;
+    curr = 0;
     first = true;
     resultDiv.innerText = expression;
     return;
@@ -45,7 +46,6 @@ function clicked(e) {
       if (op === "+") {
         console.log(prev);
         expression = (Number(prev) + Number(expression)).toFixed(1);
-        console.log(expression);
         resultDiv.innerText = expression;
         op = e;
         prev = Number(expression);
@@ -81,7 +81,11 @@ function clicked(e) {
     }
   } else if (e === "del") {
     expression = resultDiv.innerText;
-    if (expression === "Infinity") {
+    if (
+      expression === "Infinity" ||
+      expression === "-Infinity" ||
+      expression === "Error"
+    ) {
       expression = "";
       resultDiv.innerText = expression;
       return;
@@ -127,3 +131,23 @@ function clicked(e) {
     resultDiv.innerText = expression;
   }
 }
+document.addEventListener("keydown", function (event) {
+  const key = event.key;
+  if (key >= "0" && key <= "9") {
+    clicked(key);
+  } else if (key === "+" || key === "-" || key === "*" || key === "/") {
+    clicked(key);
+  } else if (key === "Backspace") {
+    clicked("del");
+  } else if (
+    key === "a" ||
+    key == "c" ||
+    key === "A" ||
+    key === "C" ||
+    key === "Escape"
+  ) {
+    clicked("C");
+  } else if (key === "Enter") {
+    clicked("=");
+  }
+});
