@@ -1,18 +1,20 @@
 const resultDiv = document.getElementById("result");
 
 let expression = "";
+let prev = 0;
+let curr;
+let op = "";
+let first = true;
 
 function clicked(e) {
-  let flag = 0;
   if (e === "C") {
-    localStorage.setItem("prevVal", JSON.stringify(0));
-    localStorage.setItem("currVal", JSON.stringify(0));
-    localStorage.setItem("op", JSON.stringify("first"));
     expression = "";
+    prev = 0;
+    curr = 0;
+    first = true;
     resultDiv.innerText = expression;
     return;
-  }
-  if (e === ".") {
+  } else if (e === ".") {
     flag = 0;
     for (let i = 0; i < expression.length; i++) {
       if (expression.charAt(i) === ".") {
@@ -25,82 +27,129 @@ function clicked(e) {
       resultDiv.innerText = expression;
       return;
     }
-  }
-  if (e === "%") {
-    expression = (parseFloat(expression) / 100.0).toFixed(2);
+  } else if (e === "%") {
+    expression = resultDiv.innerText;
+    expression = (Number(expression) / 100).toFixed(2);
     resultDiv.innerText = expression;
-    return;
-  }
-  if (e === "+" || e === "-" || e === "x" || e === "/") {
-    console.log("press");
-    let prevVal = JSON.parse(localStorage.getItem("prevVal"));
-    let currVal = JSON.parse(localStorage.getItem("currVal"));
-    localStorage.setItem("prevVal", JSON.stringify(currVal));
-    localStorage.setItem("currVal", JSON.stringify(0));
-
-    if (e === "+") {
-      expression = Number(prevVal) + Number(expression);
-      localStorage.setItem("prevVal", JSON.stringify(expression));
-      resultDiv.innerText = expression;
+  } else if (first === true) {
+    expression = expression + e;
+    resultDiv.innerText = expression;
+    prev = Number(expression);
+    console.log("here");
+    console.log(prev);
+    first = false;
+  } else if (e === "+" || e === "-" || e === "x" || e === "/") {
+    if (op === "") {
+      op = e;
+      prev = expression;
       expression = "";
-      localStorage.setItem("op", JSON.stringify(e));
-    } else if (e === "-") {
-      expression = Number(prevVal) - Number(expression);
-      localStorage.setItem("prevVal", JSON.stringify(expression));
-      resultDiv.innerText = expression;
+    } else {
+      if (op === "+") {
+        console.log(prev);
+        expression = (Number(prev) + Number(expression)).toFixed(1);
+        resultDiv.innerText = expression;
+        op = e;
+        prev = Number(expression);
+        console.log(prev);
+        expression = "";
+      } else if (op === "-") {
+        console.log(prev);
+        expression = (Number(prev) - Number(expression)).toFixed(1);
+        resultDiv.innerText = expression;
+        op = e;
+        prev = Number(expression);
+        console.log(prev);
+        expression = "";
+      } else if (op === "x") {
+        console.log(prev);
+        expression = (Number(prev) * Number(expression)).toFixed(1);
+        console.log(expression);
+        resultDiv.innerText = expression;
+        op = e;
+        prev = Number(expression);
+        console.log(prev);
+        expression = "";
+      } else if (op === "/") {
+        console.log(prev);
+        expression = (Number(prev) / Number(expression)).toFixed(1);
+        console.log(expression);
+        resultDiv.innerText = expression;
+        op = e;
+        prev = Number(expression);
+        console.log(prev);
+        expression = "";
+      }
+    }
+  } else if (e === "del") {
+    expression = resultDiv.innerText;
+    if (
+      expression === "Infinity" ||
+      expression === "-Infinity" ||
+      expression === "Error" ||
+      expression === "NaN"
+    ) {
       expression = "";
-      localStorage.setItem("op", JSON.stringify(e));
-    } else if (e === "x") {
-      console.log("x");
-      expression = Number(prevVal) * Number(expression);
-      localStorage.setItem("prevVal", JSON.stringify(expression));
       resultDiv.innerText = expression;
-      expression = "";
-      localStorage.setItem("op", JSON.stringify(e));
-    } else if (e === "/") {
-      expression = Number(prevVal) / Number(expression);
-      localStorage.setItem("prevVal", JSON.stringify(expression));
+      return;
+    }
+    expression = expression.slice(0, expression.length - 1);
+    resultDiv.innerText = expression;
+  } else if (e === "=") {
+    if (op === "+") {
+      console.log(prev);
+      expression = (Number(prev) + Number(expression)).toFixed(1);
+      console.log(expression);
       resultDiv.innerText = expression;
-      expression = "";
-      localStorage.setItem("op", JSON.stringify(e));
+      prev = Number(expression);
+      op = "";
+      console.log(prev);
+    } else if (op === "-") {
+      console.log(prev);
+      expression = (Number(prev) - Number(expression)).toFixed(1);
+      console.log(expression);
+      resultDiv.innerText = expression;
+      prev = Number(expression);
+      op = "";
+      console.log(prev);
+    } else if (op === "x") {
+      console.log(prev);
+      expression = (Number(prev) * Number(expression)).toFixed(1);
+      console.log(expression);
+      resultDiv.innerText = expression;
+      prev = Number(expression);
+      op = "";
+      console.log(prev);
+    } else if (op === "/") {
+      console.log(prev);
+      expression = (Number(prev) / Number(expression)).toFixed(1);
+      console.log(expression);
+      resultDiv.innerText = expression;
+      prev = Number(expression);
+      op = "";
+      console.log(prev);
     }
   } else {
     expression = expression + e;
-    localStorage.setItem("currVal", JSON.stringify(expression));
     resultDiv.innerText = expression;
   }
 }
-// function clicked(e) {
-//   if (e === "C") {
-//     expression = "";
-//     resultDiv.innerText = expression;
-//     return;
-//   } else if (e === ".") {
-//     flag = 0;
-//     for (let i = 0; i < expression.length; i++) {
-//       if (expression.charAt(i) === ".") {
-//         flag = 1;
-//       }
-//     }
-//     if (flag === 1) return;
-//     else {
-//         if (Number.isInteger()) expression = expression + ".";
-//       resultDiv.innerText = expression;
-//       return;
-//     }
-//   } else if (e === "del") {
-//     expression = expression.slice(0, expression.length - 1);
-//     resultDiv.innerText = expression;
-//     return;
-//   } else {
-//     expression = expression + e;
-//     resultDiv.innerText = expression;
-//   }
-// }
-
-// if (!localStorage.getItem("prevVal"))
-//   localStorage.setItem("prevVal", JSON.stringify("0"));
-// if (!localStorage.getItem("currVal"))
-//   localStorage.setItem("currVal", JSON.stringify("0"));
-// if (!localStorage.getItem("op"))
-//   localStorage.setItem("op", JSON.stringify("first"));
+document.addEventListener("keydown", function (event) {
+  const key = event.key;
+  if (key >= "0" && key <= "9") {
+    clicked(key);
+  } else if (key === "+" || key === "-" || key === "*" || key === "/") {
+    clicked(key);
+  } else if (key === "Backspace") {
+    clicked("del");
+  } else if (
+    key === "a" ||
+    key == "c" ||
+    key === "A" ||
+    key === "C" ||
+    key === "Escape"
+  ) {
+    clicked("C");
+  } else if (key === "Enter") {
+    clicked("=");
+  }
+});
