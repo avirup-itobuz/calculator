@@ -35,8 +35,6 @@ function clicked(e) {
     expression = expression + e;
     resultDiv.innerText = expression;
     prev = Number(expression);
-    console.log("here");
-    console.log(prev);
     first = false;
   } else if (e === "+" || e === "-" || e === "x" || e === "/") {
     if (op === "") {
@@ -45,38 +43,28 @@ function clicked(e) {
       expression = "";
     } else {
       if (op === "+") {
-        console.log(prev);
         expression = (Number(prev) + Number(expression)).toFixed(1);
         resultDiv.innerText = expression;
         op = e;
         prev = Number(expression);
-        console.log(prev);
         expression = "";
       } else if (op === "-") {
-        console.log(prev);
         expression = (Number(prev) - Number(expression)).toFixed(1);
         resultDiv.innerText = expression;
         op = e;
         prev = Number(expression);
-        console.log(prev);
         expression = "";
       } else if (op === "x") {
-        console.log(prev);
         expression = (Number(prev) * Number(expression)).toFixed(1);
-        console.log(expression);
         resultDiv.innerText = expression;
         op = e;
         prev = Number(expression);
-        console.log(prev);
         expression = "";
       } else if (op === "/") {
-        console.log(prev);
         expression = (Number(prev) / Number(expression)).toFixed(1);
-        console.log(expression);
         resultDiv.innerText = expression;
         op = e;
         prev = Number(expression);
-        console.log(prev);
         expression = "";
       }
     }
@@ -96,37 +84,25 @@ function clicked(e) {
     resultDiv.innerText = expression;
   } else if (e === "=") {
     if (op === "+") {
-      console.log(prev);
       expression = (Number(prev) + Number(expression)).toFixed(1);
-      console.log(expression);
       resultDiv.innerText = expression;
       prev = Number(expression);
       op = "";
-      console.log(prev);
     } else if (op === "-") {
-      console.log(prev);
       expression = (Number(prev) - Number(expression)).toFixed(1);
-      console.log(expression);
       resultDiv.innerText = expression;
       prev = Number(expression);
       op = "";
-      console.log(prev);
     } else if (op === "x") {
-      console.log(prev);
       expression = (Number(prev) * Number(expression)).toFixed(1);
-      console.log(expression);
       resultDiv.innerText = expression;
       prev = Number(expression);
       op = "";
-      console.log(prev);
     } else if (op === "/") {
-      console.log(prev);
       expression = (Number(prev) / Number(expression)).toFixed(1);
-      console.log(expression);
       resultDiv.innerText = expression;
       prev = Number(expression);
       op = "";
-      console.log(prev);
     }
   } else {
     expression = expression + e;
